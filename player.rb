@@ -1,4 +1,4 @@
-# Player class should have attributes that tell the player's number, player's lives, player's score. Each player can answer questions
+# Player class should have attributes that tell the player's number, player's lives. Each player can answer questions
 module MathGame
   class Player
     attr_reader :lives, :name
