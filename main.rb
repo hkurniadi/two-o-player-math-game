@@ -10,48 +10,45 @@ module MathGame
   class Game
     def initialize(num_of_players)
       @players = []
-      # if @players.length == 2
-      #   puts "Sorry, max player reached"
-      # end
       num_of_players.times do |number|
-        @players.push(Player.new(number + 1))
+        @players.push(Player.new(number))
       end
       @current_player = 0
-      # puts "All players #{@players}"
     end
 
+    def winner
+      @players.find_index { |player| player.lives.to_i > 0 }
+    end
     def game_over?
       @players.any? { |player| player.lives.to_i == 0 }
     end
 
     def start
-      player1_lives = @players[@current_player].lives
-      player2_lives = @players[@current_player+1].lives
       puts "Game Started!"
+      @current_player = 0
+      player1 = @players[@current_player]
+      player2 = @players[@current_player+1]
       loop do
-        new_turn = Turn.new(@current_player+1)
-        new_turn.ask_question
-        result = new_turn.get_answer
-        # answer = gets
-        # puts "Your answer: #{answer}"
-        if result == true
-          puts "P#{@current_player+1}: #{player1_lives}\/3 vs P#{@current_player+2}: #{player2_lives}\/3"
+        puts "---- NEW TURN ----"
+        print "Player #{@players[@current_player].name}: "
+        curr_question = Question.new
+        puts curr_question.question
+        players_answer = gets.to_i
+
+        if players_answer != curr_question.answer
+          @players[@current_player].lose_lives
+          puts "P1: #{player1.lives}\/3 vs P2: #{player2.lives}\/3"
         else
-          player1_lives -= 1
-          puts "P#{@current_player+1}: #{player1_lives}\/3 vs P#{@current_player+2}: #{player2_lives}\/3"
+          puts "P1: #{player1.lives}\/3 vs P2: #{player2.lives}\/3"
         end
-        if player1_lives == 0 || player2_lives == 0
+
+        if game_over?
           puts "---- GAME OVER ----"
-          puts "Good Bye!"
+          puts "Player #{@players[winner].name} won"
           break
         end
 
-        puts @current_player
-        if @current_player == 0
-          @current_player += 1
-        else
-          @current_player -= 1
-        end
+        @current_player == 0 ? @current_player += 1 : @current_player -= 1
       end
     end
   end

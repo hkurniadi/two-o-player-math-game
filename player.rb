@@ -6,5 +6,9 @@ module MathGame
       @name = number + 1
       @lives = 3
     end
+
+    def lose_lives
+      @lives -= 1
+    end
   end
 end

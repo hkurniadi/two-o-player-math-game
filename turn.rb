@@ -15,13 +15,7 @@ module MathGame
       answer = gets.to_i
       # puts "the answer is #{@question.current_answer}"
       # puts "answer is #{answer.class}"
-      if answer == @question.current_answer
-        # puts "it's correct!"
-        true
-      else
-        # puts "it's false :("
-        false
-      end
+      answer == @question.current_answer
     end
   end
 end
