@@ -11,8 +11,9 @@ module MathGame
     def initialize(num_of_players)
       @players = []
       num_of_players.times do |number|
-        @players.push(Player.new(number))
+        @players.push(Player.new(number + 1))
       end
+      puts "All players #{@players}"
     end
 
     def game_over?
@@ -25,6 +26,6 @@ module MathGame
   end
 end
 
-if $0 == __FILE
+if $0 == __FILE__
   MathGame::Game.new(2).start
 end
